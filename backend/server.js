@@ -36,3 +36,6 @@ app.listen (PORT, () => {
 
 
 //.... comment your route and add it here 
+const router = require("./Routes/student.route.js");
+
+app.use("/students", router);
