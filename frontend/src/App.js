@@ -5,6 +5,7 @@ import './App.css';
 import Header from "./components/Header";
 import students from "./components/students/students";
 import programs from "./components/programs/programs";
+import createProgram from "./components/programs/createProgram";
 
 
 function App() {
@@ -15,8 +16,9 @@ function App() {
         
         <Route path="/students" exact Component={ students } > </Route>
         <Route path="/programs" exact Component={ programs } > </Route>
+        <Route path="/program/add" exact Component={ createProgram } > </Route>
 
-        
+
       </Routes>
     </BrowserRouter>
   );

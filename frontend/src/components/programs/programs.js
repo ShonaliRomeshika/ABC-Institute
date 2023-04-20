@@ -110,7 +110,7 @@ export default class programs extends Component {
           style={{ backgroundColor: "#c99212" }}
         >
           <a
-            href="programs/add"
+            href="program/add"
             style={{
               textDecoration: "none",
               color: "white",

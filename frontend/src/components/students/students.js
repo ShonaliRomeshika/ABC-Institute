@@ -36,7 +36,7 @@ export default class students extends Component {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        axios.delete(`http://localhost:8000/student/delete/${id}`).then((res) => {
+        axios.delete(`http://localhost:8000/students/delete/${id}`).then((res) => {
           swal(
             "Delete Successfully!",
             "Student is removed",
