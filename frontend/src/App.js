@@ -1,13 +1,22 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import './App.css';
+
 import Header from "./components/Header";
+import students from "./components/students/students";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <BrowserRouter>
       <Header />
-      </header>
-    </div>
+      <Routes>
+        
+        <Route path="/students" exact Component={ students } > </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
