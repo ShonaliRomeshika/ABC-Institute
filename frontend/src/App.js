@@ -4,6 +4,7 @@ import './App.css';
 
 import Header from "./components/Header";
 import students from "./components/students/students";
+import programs from "./components/programs/programs";
 
 
 function App() {
@@ -13,6 +14,9 @@ function App() {
       <Routes>
         
         <Route path="/students" exact Component={ students } > </Route>
+        <Route path="/programs" exact Component={ programs } > </Route>
+
+        
       </Routes>
     </BrowserRouter>
   );

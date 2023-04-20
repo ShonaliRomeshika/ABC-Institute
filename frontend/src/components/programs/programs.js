@@ -3,26 +3,26 @@ import axios from "axios";
 import swal from "sweetalert";
 
 
-export default class students extends Component {
+export default class programs extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        students: [],
+        programs: [],
     };
   }
 
   componentDidMount() {
-    this.retrieveStudents();
+    this.retrievePrograms();
   }
 
-  retrieveStudents() {
-    axios.get("http://localhost:8000/students").then((res) => {
+  retrievePrograms() {
+    axios.get("http://localhost:8000/programs").then((res) => {
       if (res.data.success) {
         this.setState({
-            students: res.data.existingstudents,
+            programs: res.data.existingprograms,
         });
-        console.log(this.state.students);
+        console.log(this.state.programs);
       }
     });
   }
@@ -30,40 +30,40 @@ export default class students extends Component {
   onDelete = (id) => {
     swal({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover the details of this student!",
+      text: "Once deleted, you will not be able to recover the details of this program!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        axios.delete(`http://localhost:8000/student/delete/${id}`).then((res) => {
+        axios.delete(`http://localhost:8000/program/delete/${id}`).then((res) => {
           swal(
             "Delete Successfully!",
-            "Student is removed",
+            "Program is removed",
             "success"
           );
 
-          this.retrievestudents();
+          this.retrieveprograms();
         });
       } else {
-        swal("Student is not deleted!");
+        swal("Program is not deleted!");
       }
     });
   };
 
   filterData = (searchKey) => {
-    const {students } = this.state;
-    const result = students.filter((student) => {
+    const {programs } = this.state;
+    const result = programs.filter((program) => {
       const {
-        student_id,
+        program_id,
         name
-      } = student;
+      } = program;
       return (
         name.toLowerCase().includes(searchKey) ||
-        student_id.toLowerCase().includes(searchKey)
+        program_id.toLowerCase().includes(searchKey)
       );
     });
-    this.setState({ students: result });
+    this.setState({ programs: result });
   };
   
 
@@ -86,7 +86,7 @@ export default class students extends Component {
             width: "500px",
           }}
         >
-        Students
+        Programs
         </h1>
         </center>
 
@@ -110,14 +110,14 @@ export default class students extends Component {
           style={{ backgroundColor: "#c99212" }}
         >
           <a
-            href="students/add"
+            href="programs/add"
             style={{
               textDecoration: "none",
               color: "white",
               fontSize: "large",
             }}
           >
-            Add Student
+            Add Program
           </a>
         </button>
 
@@ -126,24 +126,24 @@ export default class students extends Component {
         <table className="table table-striped" Id = "class-table">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">Student ID</th>
+              <th scope="col">Program ID</th>
               <th scope="col">Name</th>
-              <th scope="col">Address</th>
-              <th scope="col">Contact No.</th>
+              <th scope="col">Duration</th>
+              <th scope="col">Cost</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            {this.state.students.map((students, index) => (
+            {this.state.programs.map((programs, index) => (
               <tr key={index}>
                
-                <td>{students.student_id}</td>
-                <td>{students.name}</td>
-                <td>{students.address}</td>
-                <td>{students.contact}</td>
+                <td>{programs.program_id}</td>
+                <td>{programs.name}</td>
+                <td>{programs.duration}</td>
+                <td>{programs.cost}</td>
                 <a
                   className="btn btn-warning"
-                  href={`students/update/${students._id}`}
+                  href={`program/update/${programs._id}`} //program._id-------------------
                 >
                   <i className="fas fa-edit"> </i>&nbsp; Edit
                 </a>
@@ -152,7 +152,7 @@ export default class students extends Component {
                   className="btn btn-danger"
                   href="#"
                   style={{ color: "black" }}
-                  onClick={() => this.onDelete(students._id)}
+                  onClick={() => this.onDelete(programs._id)}
                 >
                   <i
                     className="far fa-trash-alt"
