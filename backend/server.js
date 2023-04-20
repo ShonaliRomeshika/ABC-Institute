@@ -37,5 +37,9 @@ app.listen (PORT, () => {
 
 //.... comment your route and add it here 
 const router = require("./Routes/student.route.js");
+const program = require("./Routes/program.route.js");
+const registration = require("./Routes/studentHasProgram.route.js");
 
 app.use("/students", router);
+app.use(program);
+app.use(registration);
