@@ -42,7 +42,7 @@ export default class createProgram extends Component {
     console.log(data);
 
     //validations
-    const id = /[Pp]\d{2}/;
+    const pid = /[Pp]\d{2}/;
     const num = /^\d+$/
     ;
 
@@ -58,7 +58,7 @@ export default class createProgram extends Component {
         "error"
       );
     } 
-    else if ((!id.test(String(program_id)))) {
+    else if ((!pid.test(String(program_id)))) {
         swal("Invalid Program ID", "Wrong Program ID Format, There should be P/p and only 2 digits, Ex: P05", "error");
     }
     else if ((!num.test(String(cost)))) {
