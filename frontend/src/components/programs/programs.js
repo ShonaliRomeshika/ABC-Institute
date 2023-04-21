@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 import swal from "sweetalert";
 
 
@@ -9,7 +10,10 @@ export default class programs extends Component {
 
     this.state = {
         programs: [],
-    };
+        currentPage: 0,
+        pageCount: 0,
+      };
+      
   }
 
   componentDidMount() {
@@ -19,10 +23,13 @@ export default class programs extends Component {
   retrievePrograms() {
     axios.get("http://localhost:8000/programs").then((res) => {
       if (res.data.success) {
+        const programs = res.data.existingprograms;
+        const pageCount = Math.ceil(programs.length / 5);
         this.setState({
-            programs: res.data.existingprograms,
+          programs,
+          pageCount,
         });
-        console.log(this.state.programs);
+        console.log(programs);
       }
     });
   }
@@ -42,8 +49,8 @@ export default class programs extends Component {
             "Program is removed",
             "success"
           );
-
-          this.retrieveprograms();
+  
+          this.retrievePrograms(this.state.currentPage);
         });
       } else {
         swal("Program is not deleted!");
@@ -51,6 +58,15 @@ export default class programs extends Component {
     });
   };
 
+  handlePageClick = (data) => {
+    const { selected } = data;
+    this.setState({
+      currentPage: selected,
+    });
+  };
+  
+  
+  
   filterData = (searchKey) => {
     const {programs } = this.state;
     const result = programs.filter((program) => {
@@ -74,6 +90,13 @@ export default class programs extends Component {
 
 
   render() {
+
+    const { programs, currentPage, pageCount } = this.state;
+  const itemsPerPage = 5;
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = (currentPage + 1) * itemsPerPage;
+  const displayedPrograms = programs.slice(startIndex, endIndex);
+
     return (
       <div className="container">
         <center>
@@ -103,7 +126,7 @@ export default class programs extends Component {
             ></input>
           </form>
         </div>
-        <br></br><br></br><br></br>
+        <br></br>
 
         <button
           className="btn btn-primary btn-lg active"
@@ -121,7 +144,7 @@ export default class programs extends Component {
           </a>
         </button>
 
-        <br></br><br></br><br></br>
+        <br></br><br></br>
 
         <table className="table table-striped" Id = "class-table">
           <thead className="thead-dark">
@@ -134,16 +157,16 @@ export default class programs extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.programs.map((programs, index) => (
-              <tr key={index}>
-               
-                <td>{programs.program_id}</td>
-                <td>{programs.name}</td>
-                <td>{programs.duration}</td>
-                <td>{programs.cost}</td>
+          {displayedPrograms.map((program, index) => (
+            <tr key={index}>
+              <td>{program.program_id}</td>
+              <td>{program.name}</td>
+              <td>{program.duration}</td>
+              <td>{program.cost}</td>
+              <td>
                 <a
                   className="btn btn-warning"
-                  href={`program/update/${programs._id}`} //program._id-------------------
+                  href={`program/update/${program._id}`}
                 >
                   <i className="fas fa-edit"> </i>&nbsp; Edit
                 </a>
@@ -152,7 +175,7 @@ export default class programs extends Component {
                   className="btn btn-danger"
                   href="#"
                   style={{ color: "black" }}
-                  onClick={() => this.onDelete(programs._id)}
+                  onClick={() => this.onDelete(program._id)}
                 >
                   <i
                     className="far fa-trash-alt"
@@ -166,10 +189,32 @@ export default class programs extends Component {
                   </i>{" "}
                   &nbsp; Delete
                 </a>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+
+        <ReactPaginate
+        previousLabel={"<"}
+        nextLabel={">"}
+        pageCount={pageCount}
+        onPageChange={this.handlePageClick}
+containerClassName={"pagination"}
+activeClassName={"active"}
+previousClassName={"page-link"}
+nextClassName={"page-link"}
+disabledClassName={"disabled"}
+pageClassName={"page-item"}
+pageLinkClassName={"page-link"}
+breakClassName={"page-item"}
+breakLinkClassName={"page-link"}
+marginPagesDisplayed={2}
+pageRangeDisplayed={5}
+/>
+
+
         
       </div>
       
