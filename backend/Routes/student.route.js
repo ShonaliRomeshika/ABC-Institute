@@ -40,7 +40,7 @@ router.post("/add", async (req, res, next) => {
     console.log(err);
     return res.status(500).json({ message: "Unable To Add" });
   }
-
+/*
   let stdProgram;
   try {
     stdProgram = new studentHasProgram({
@@ -59,7 +59,7 @@ router.post("/add", async (req, res, next) => {
     data: {
       stdProgram,
     },
-  });
+  });    */
 });
 
 //Get specific student
