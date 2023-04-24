@@ -152,7 +152,7 @@ export default class programs extends Component {
               <th scope="col">Program ID</th>
               <th scope="col">Name</th>
               <th scope="col">Duration</th>
-              <th scope="col">Cost</th>
+              <th scope="col">Cost (Rs.)</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
