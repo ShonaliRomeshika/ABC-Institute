@@ -5,7 +5,7 @@ const studentHasProgram = require('../models/studentHasProgram.model');
 // Get all student program registrations
 router.get('/registrations', async (req, res, next) => {
   try {
-    const registrations = await studentHasProgram.find().populate('student').populate('program');
+    const registrations = await studentHasProgram.find().populate('student_id').populate('program_id');
     return res.status(200).json({
       success: true,
       registrations: registrations
@@ -20,7 +20,7 @@ router.get('/registrations', async (req, res, next) => {
 router.get('/registration/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
-    const registration = await studentHasProgram.findById(id).populate('student').populate('program');
+    const registration = await studentHasProgram.findById(id).populate('student_id').populate('program_id');
     if (!registration) {
       return res.status(404).json({ message: "No registration found" });
     }
@@ -36,10 +36,10 @@ router.get('/registration/:id', async (req, res, next) => {
 
 // Add new student program registration
 router.post('/registration/add', async (req, res, next) => {
-  const { student, program } = req.body;
+  const { student_id, program_id } = req.body;
   let registration;
   try {
-    registration = new studentHasProgram({ student, program });
+    registration = new studentHasProgram({ student_id, program_id });
     await registration.save();
   } catch (err) {
     console.log(err);

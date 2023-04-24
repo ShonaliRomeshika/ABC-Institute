@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const studentHasProgramSchema = new Schema({
-    student: {
-        type: mongoose.Schema.Types.ObjectId,
+    student_id: {
+        type: String,
         ref: 'Student',
         required: true
       },
-      program: {
-        type: mongoose.Schema.Types.ObjectId,
+      program_id: {
+        type: String,
         ref: 'Program',
         required: true
       },

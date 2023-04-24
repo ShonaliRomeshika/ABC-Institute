@@ -7,7 +7,7 @@ export default function EditProgram() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-          const [program_id, setProgram_ID] = useState("");
+        
           const [name, setName] = useState("");
           const [duration, setDuration] = useState("");
           const [cost, setCost] = useState("");
@@ -16,7 +16,6 @@ export default function EditProgram() {
     axios.get(`http://localhost:8000/program/${id}`)
       .then((res) => {
         if (res.data.success) {
-          setProgram_ID(res.data.program.program_id);
           setName(res.data.program.name);
           setDuration(res.data.program.duration);
           setCost(res.data.program.cost);
@@ -29,9 +28,6 @@ export default function EditProgram() {
     const { name, value } = e.target;
   
     switch (name) {
-      case "program_id":
-        setProgram_ID(value);
-        break;
       case "name":
         setName(value);
         break;
@@ -51,7 +47,6 @@ export default function EditProgram() {
     e.preventDefault();
 
     const data = {
-      program_id: program_id,
       name: name,
       duration: duration,
       cost: cost,
@@ -59,12 +54,10 @@ export default function EditProgram() {
 
 
   //validations
-  const pid = /[Pp]\d{2}/;
   const num = /^\d+$/
   ;
 
   if (
-    program_id === "" ||
     name === "" ||
     duration === "" ||
     cost === "" 
@@ -75,9 +68,6 @@ export default function EditProgram() {
       "error"
     );
   } 
-  else if ((!pid.test(String(program_id)))) {
-      swal("Invalid Program ID", "Wrong Program ID Format, There should be P/p and only 2 digits, Ex: P05", "error");
-  }
   else if ((!num.test(String(cost)))) {
       swal("Invalid Cost", "There should be only digits, Ex: 10000", "error");
   }
@@ -85,7 +75,7 @@ export default function EditProgram() {
      else {
       swal({
         title: "Are you sure?",
-        text: `Program ID: ${program_id} | Program Name: ${name} |
+        text: `Program Name: ${name} |
             Duration: ${duration} | Cost: ${cost}`,
         icon: "info",
         buttons: true,
@@ -95,7 +85,6 @@ export default function EditProgram() {
           axios.put(`http://localhost:8000/program/update/${id}`, data)
             .then((res) => {
               if (res.data.success) {
-                setProgram_ID("");
                 setName("");
                 setDuration("");
                 setCost("");
@@ -126,19 +115,7 @@ export default function EditProgram() {
       <form>
         <div className="form-group">
             <div className="form-group">
-              <label style={{ marginBottom: '5px',fontSize:'19px' }} for="exampleInputPassword1">
-                <b>Program ID:</b>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                name="program_id"
-                placeholder="P01"
-                value={program_id}
-                onChange={handleInputChange}
-                required
-              />
-            <br></br>
+            
             <label style={{ marginBottom: '5px',fontSize:'19px' }} for="exampleInputEmail1"><b>Program Name:</b></label>
             <input
               type="text"

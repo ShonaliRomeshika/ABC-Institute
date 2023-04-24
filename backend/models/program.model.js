@@ -22,4 +22,24 @@ const programSchema = new Schema({
       }
 });
 
+
+programSchema.pre('save', async function (next) {
+  const doc = this;
+  try {
+    if (!doc.isNew) {
+      return next();
+    }
+
+    let count = await mongoose.model('Program', programSchema).countDocuments();
+    count += 1;
+    const id = "P" + "0".repeat(2 - count.toString().length) + count;
+    doc.program_id = id;
+
+    next();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
 module.exports = mongoose.model('Program', programSchema);

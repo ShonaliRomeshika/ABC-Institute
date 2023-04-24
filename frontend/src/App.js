@@ -8,6 +8,8 @@ import programs from "./components/programs/programs";
 import createProgram from "./components/programs/createProgram";
 import EditProgram from "./components/programs/editProgram";
 
+import RegisterStudent from "./components/students/RegisterStudent";
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Route path="/programs" exact Component={ programs } > </Route>
         <Route path="/program/add" exact Component={ createProgram } > </Route>
         <Route path="/program/update/:id" exact Component={ EditProgram } > </Route>
+        <Route path="/students/add" exact Component={ RegisterStudent } > </Route>
 
 
       </Routes>

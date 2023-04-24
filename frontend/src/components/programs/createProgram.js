@@ -6,7 +6,6 @@ export default class createProgram extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      program_id: "",
       name: "",
       duration: "",
       cost: "",
@@ -26,14 +25,12 @@ export default class createProgram extends Component {
     e.preventDefault();
 
     const {
-        program_id,
         name,
         duration,
         cost,
     } = this.state;
 
     const data = {
-      program_id: program_id,
       name: name,
       duration: duration,
       cost: cost,
@@ -42,12 +39,10 @@ export default class createProgram extends Component {
     console.log(data);
 
     //validations
-    const pid = /[Pp]\d{2}/;
     const num = /^\d+$/
     ;
 
     if (
-      program_id === "" ||
       name === "" ||
       duration === "" ||
       cost === "" 
@@ -57,9 +52,6 @@ export default class createProgram extends Component {
         "Form values cannot be empty",
         "error"
       );
-    } 
-    else if ((!pid.test(String(program_id)))) {
-        swal("Invalid Program ID", "Wrong Program ID Format, There should be P/p and only 2 digits, Ex: P05", "error");
     }
     else if ((!num.test(String(cost)))) {
         swal("Invalid Cost", "There should be only digits, Ex: 10000", "error");
@@ -67,7 +59,7 @@ export default class createProgram extends Component {
     else {
       swal({
         title: "Are you sure?",
-        text: `Program ID: ${this.state.program_id} | Name: ${this.state.name} | 
+        text: `Program Name: ${this.state.name} | 
         Duration: ${this.state.duration} | Cost: ${this.state.cost}`,
         icon: "info",
         buttons: true,
@@ -111,19 +103,7 @@ export default class createProgram extends Component {
         <form>
         <div className="form-group">
             <div className="form-group">
-              <label style={{ marginBottom: '5px',fontSize:'19px' }} for="exampleInputPassword1">
-                <b>Program ID:</b>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                name="program_id"
-                placeholder="P01"
-                value={this.state.program_id}
-                onChange={this.handleInputChange}
-                required
-              />
-            <br></br>
+              
             <label style={{ marginBottom: '5px',fontSize:'19px' }} for="exampleInputEmail1"><b>Program Name:</b></label>
             <input
               type="text"

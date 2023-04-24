@@ -20,35 +20,29 @@ router.get ("/programs", async (req, res, next) => {
     });
   });
 
-    //add new program
-  router.post ("/program/add", async (req, res, next) => {
-    const { 
-        program_id,  
-        name, 
-        duration, 
-        cost
-    } = req.body;
-    let prm; 
-    try {
-      prm = new program({  
-        program_id,  
-        name, 
-        duration, 
-        cost
-      });
-      await prm.save();
-    } catch (err) {
-      console.log(err);
-    }
-  
-    if (!prm) {
-      return res.status(500).json({ message: "Unable To Add" });
-    }
-    return res.status(201).json({ 
-      success:"program added successfully",
-      program: prm
-    });
+    // add new program
+router.post("/program/add", async (req, res, next) => {
+  const { name, duration, cost } = req.body;
+  const lastProgram = await program.find().sort({ _id: -1 }).limit(1).exec();
+  const lastProgramId = lastProgram.length > 0 ? lastProgram[0].program_id : null;
+  let newProgram = new program({
+    name,
+    duration,
+    cost,
   });
+  if (lastProgramId) {
+    const newProgramId = "P" + (parseInt(lastProgramId.slice(1)) + 1).toString().padStart(2, "0");
+    newProgram.program_id = newProgramId;
+  }
+  try {
+    await newProgram.save();
+    res.status(201).json({ success: true, newProgram });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 
 
 //Get specific program
