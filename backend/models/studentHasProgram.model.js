@@ -5,12 +5,12 @@ const Schema = mongoose.Schema;
 const studentHasProgramSchema = new Schema({
     student_id: {
         type: String,
-        ref: 'Student',
+        //ref: 'Student',
         required: true
       },
       program_id: {
         type: String,
-        ref: 'Program',
+        //ref: 'Program',
         required: true
       },
       registerDate: {

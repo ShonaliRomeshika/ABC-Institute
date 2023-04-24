@@ -21,7 +21,7 @@ const studentSchema = new Schema({
     required: true
   },
   program_id: { 
-    type: String, 
+    type: mongoose.Schema.Types.ObjectId, 
     ref: "Program" 
   } // add program_id field
 });

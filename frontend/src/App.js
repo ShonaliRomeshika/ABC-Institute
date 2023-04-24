@@ -10,6 +10,8 @@ import EditProgram from "./components/programs/editProgram";
 
 import createStudent from "./components/students/createStudent";
 import EditStudent from "./components/students/editStudent";
+import register from "./components/registrations/register";
+import registrationsList from "./components/registrations/registrationsList";
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
         <Route path="/program/update/:id" exact Component={ EditProgram } > </Route>
         <Route path="/students/add" exact Component={ createStudent } > </Route>
         <Route path="/student/update/:id" exact Component={ EditStudent } > </Route>
+        <Route path="/students/register" exact Component={ register } > </Route>
+        <Route path="/students/registrations" exact Component={ registrationsList } > </Route>
 
 
       </Routes>
